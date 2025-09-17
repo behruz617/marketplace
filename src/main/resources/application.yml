@@ -1,4 +1,9 @@
 spring:
+  security:
+    jwt:
+      secret: mySuperSecretKey12345678901234567890
+      # açıq şəkildə saxlanır
+      expiration: 86400000
   datasource:
     url: jdbc:postgresql://localhost:5432/marketdb
     username: market

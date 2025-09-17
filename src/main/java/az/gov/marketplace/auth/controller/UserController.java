@@ -1,8 +1,11 @@
 package az.gov.marketplace.auth.controller;
 
 import az.gov.marketplace.auth.domain.User;
+import az.gov.marketplace.auth.dto.UserResponse;
 import az.gov.marketplace.auth.repo.UserRepository;
+import az.gov.marketplace.auth.service.JwtService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,15 +15,27 @@ import java.util.List;
 @RequiredArgsConstructor()
 public class UserController {
     private final UserRepository userRepo;
+    private final JwtService jwtService;
 
     @GetMapping
-    public List<User> all(){
+    public List<User> all() {
         return userRepo.findAll();
     }
 
-    @PostMapping
-    public User create(@RequestBody User user){
-        return userRepo.save(user);
+    @GetMapping("/me")
+    public ResponseEntity<UserResponse> me(@RequestHeader("Authorization") String authHeader) {
+        String token = authHeader.substring(7);
+        String email = jwtService.extractEmail(token);
+
+        User user = userRepo.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+        return ResponseEntity.ok(
+                UserResponse.builder()
+                        .id(user.getId())
+                        .email(user.getEmail())
+                        .createdAt(user.getCreatedAt())
+                        .build()
+        );
     }
 
 }
