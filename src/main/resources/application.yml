@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/marketdb
+    username: market
+    password: market
+  jpa:
+    hibernate:
+      ddl-auto: validate   # sxemi Flyway idarə edəcək
+    properties:
+      hibernate.format_sql: true
+      hibernate.jdbc.time_zone: UTC
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+server:
+  port: 8080
+
+springdoc:
+  api-docs.path: /v3/api-docs
+  swagger-ui.path: /swagger
+
