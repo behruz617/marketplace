@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.nio.file.AccessDeniedException;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,6 +31,15 @@ public class GlobalExceptionHandler {
         body.put("message",e.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
 
+    }
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<Map<String,Object>>handleAccessDenied(AccessDeniedException  ex){
+        Map<String,Object>body=new HashMap<>();
+        body.put("error","Forbidden");
+        body.put("message","Acces denied");
+        body.put("timeStamp",Instant.now());
+        body.put("status",403);
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(body);
     }
 
 }
