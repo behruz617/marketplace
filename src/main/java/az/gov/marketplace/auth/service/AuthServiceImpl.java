@@ -57,7 +57,7 @@ public class AuthServiceImpl implements AuthService {
         refreshTokenService.createRefreshToken(
                 user,
                 refreshToken,
-                LocalDateTime.now().plus(Duration.ofMillis(jwtProperties.getRefreshExpirations()))
+                LocalDateTime.now().plus(Duration.ofMillis(jwtProperties.getRefreshExpiration()))
         );
         user.setLastLogin(Instant.now());
         userRepository.save(user);

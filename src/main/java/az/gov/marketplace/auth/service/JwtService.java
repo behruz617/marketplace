@@ -30,7 +30,7 @@ public class JwtService {
         return Jwts.builder()
                 .setSubject(email)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + jwtProp.getAccessExpirations()))
+                .setExpiration(new Date(System.currentTimeMillis() + jwtProp.getAccessExpiration()))
                 .signWith(getSigngKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -40,7 +40,7 @@ public class JwtService {
         return Jwts.builder()
                 .setSubject(email)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + jwtProp.getRefreshExpirations()))
+                .setExpiration(new Date(System.currentTimeMillis() + jwtProp.getRefreshExpiration()))
                 .signWith(getSigngKey(), SignatureAlgorithm.HS256)
                 .compact();
 
