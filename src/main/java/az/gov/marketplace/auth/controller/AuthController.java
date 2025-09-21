@@ -1,9 +1,6 @@
 package az.gov.marketplace.auth.controller;
 
-import az.gov.marketplace.auth.dto.LoginRequest;
-import az.gov.marketplace.auth.dto.LoginResponse;
-import az.gov.marketplace.auth.dto.RegisterRequest;
-import az.gov.marketplace.auth.dto.UserResponse;
+import az.gov.marketplace.auth.dto.*;
 import az.gov.marketplace.auth.service.AuthService;
 import az.gov.marketplace.auth.service.JwtService;
 import lombok.RequiredArgsConstructor;
@@ -19,26 +16,42 @@ public class AuthController {
     private final AuthService authService;
     private final JwtService jwtService;
 
+
     @PostMapping("/register")
-    public ResponseEntity<UserResponse> register(@RequestBody RegisterRequest req){
-        UserResponse resp=authService.register(req);
+    public ResponseEntity<UserResponse> register(@RequestBody RegisterRequest req) {
+        UserResponse resp = authService.register(req);
         return ResponseEntity.status(HttpStatus.CREATED).body(resp);
     }
 
+    @PostMapping("login")
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest req) {
+        return ResponseEntity.ok(authService.login(req));
+    }
 
-    @GetMapping("/token")
-    public String generateToken(@RequestParam String email){
-        return jwtService.generateToken(email);
+    @GetMapping("/generateAccessToken")
+    public String generateAccessToken(@RequestParam String email) {
+        return jwtService.generateAccessToken(email);
+    }
+
+    @GetMapping("/generateRefreshToken")
+    public String generateRefreshToken(@RequestParam String email) {
+        return jwtService.generateRefreshToken(email);
     }
 
     @GetMapping("/validate")
-    public String validateToken(@RequestParam String token,@RequestParam String email){
-        boolean valid=jwtService.isTokenValid(token,email);
-        return valid?"valid":"invalid";
+    public String validate(@RequestParam String token) {
+        String email=jwtService.extractEmail(token);
+        boolean valid = jwtService.isTokenValid(token, email);
+        return valid ? "valid" : "invalid";
     }
 
-    @PostMapping("login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest req){
-        return ResponseEntity.ok(authService.login(req));
+    @PostMapping("/logout")
+    public void logout(@RequestBody LogoutRequest logOutReq) {
+        authService.logout(logOutReq);
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<LoginResponse>refresh(@RequestBody RefreshRequest refreshRequest){
+        return ResponseEntity.ok(authService.refresh(refreshRequest));
     }
 }

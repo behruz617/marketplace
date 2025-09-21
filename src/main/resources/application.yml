@@ -1,9 +1,10 @@
 spring:
   security:
     jwt:
-      secret: mySuperSecretKey12345678901234567890
+      secret: G8TlwANba6QV6bG9umVjG5LjFgdCxdM6rIIFaa+hvFQ=
       # açıq şəkildə saxlanır
-      expiration: 86400000
+      access-expiration: 3600000
+      refresh-expiration: 604800000
   datasource:
     url: jdbc:postgresql://localhost:5432/marketdb
     username: market

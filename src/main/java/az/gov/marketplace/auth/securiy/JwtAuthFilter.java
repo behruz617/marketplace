@@ -9,13 +9,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.security.Security;
-import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -30,6 +30,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
 
         String authHeader = request.getHeader("Authorization");
+        System.out.println("➡ Authorization header: " + authHeader);
 
         // Header yoxdursa və ya "Bearer " ilə başlamırsa, ötür
         if (authHeader == null || !authHeader.startsWith("Bearer")) {
@@ -45,8 +46,11 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             User user=userRepository.findByEmail(email).orElse(null);
 
             if (user!=null&& jwtService.isTokenValid(token,email)){
+                System.out.println("JwtAuthFilter - user: \" + user.getEmail() + \" role: \" + user.getRole()");
                 UsernamePasswordAuthenticationToken authToken=
-                        new UsernamePasswordAuthenticationToken(user,null,new ArrayList<>());
+                        new UsernamePasswordAuthenticationToken(user,
+                                null,
+                                List.of(new SimpleGrantedAuthority("ROLE_"+user.getRole().name())));
 
                 SecurityContextHolder.getContext().setAuthentication(authToken);
 
