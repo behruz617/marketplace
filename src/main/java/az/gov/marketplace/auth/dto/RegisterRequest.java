@@ -1,5 +1,6 @@
 package az.gov.marketplace.auth.dto;
 
+import az.gov.marketplace.auth.domain.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,6 +16,7 @@ public class RegisterRequest {
     private String password;
     private String name;
     private String phone;
+    private Role role;
 
 
 }

@@ -5,7 +5,6 @@ import az.gov.marketplace.auth.domain.Role;
 import az.gov.marketplace.auth.domain.User;
 import az.gov.marketplace.auth.dto.*;
 import az.gov.marketplace.auth.mapper.UserMapper;
-import az.gov.marketplace.auth.repo.RefreshTokenRepository;
 import az.gov.marketplace.auth.repo.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +35,7 @@ public class AuthServiceImpl implements AuthService {
         }
         User u = userMapper.toEntity(reg);
         u.setPassword(passwordEncoder.encode(reg.getPassword()));
-        u.setRole(Role.USER);
+        u.setRole(reg.getRole()!=null ? reg.getRole():Role.USER);
         User saved = userRepository.save(u);
         return userMapper.toResponse(saved);
     }
