@@ -13,7 +13,7 @@ public class AdminController {
     @GetMapping("/stats")
     @PreAuthorize("hasRole('ADMIN')")
     public String stats() {
-        return "Bu endpointe yalniz admin gire biler";
+        return "Only adin can see this";
     }
 
     //User ve admin her ikisi gore biler
@@ -22,7 +22,6 @@ public class AdminController {
     public String common() {
         return "Bunu butun login olmus user-ler gore biler";
     }
-
 
 
 }

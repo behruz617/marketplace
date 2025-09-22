@@ -6,6 +6,7 @@ import az.gov.marketplace.auth.repo.UserRepository;
 import az.gov.marketplace.auth.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +17,16 @@ import java.util.List;
 public class UserController {
     private final UserRepository userRepo;
     private final JwtService jwtService;
+
+    @GetMapping("/profile")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    public String getProfile() {
+        return "User and Admin can see this";
+    }
+
+
+
+
 
     @GetMapping
     public List<User> all() {

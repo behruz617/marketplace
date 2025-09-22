@@ -8,6 +8,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.time.Instant;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -38,7 +40,14 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_"+role.name()));
+        Set<SimpleGrantedAuthority>authorities=role.getAuthorities()
+                .stream()
+                .map(auth -> new SimpleGrantedAuthority(auth.name()))
+                .collect(Collectors.toSet());
+        authorities.add(new SimpleGrantedAuthority("ROLE_"+role.name()));
+        System.out.println("Authorities for " + email + ": " + authorities);
+        return authorities;
+
     }
 
     @Override

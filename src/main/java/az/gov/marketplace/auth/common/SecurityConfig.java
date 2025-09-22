@@ -4,6 +4,7 @@ import az.gov.marketplace.auth.securiy.JwtAuthFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -33,14 +34,24 @@ public class SecurityConfig {
                                 "/swagger/**",
                                 "/api/auth/**"
                         ).permitAll()
+
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/seller/**").hasAnyRole("SELLER","ADMIN")
+                        .requestMatchers("/api/users/**").hasAnyRole("USER","ADMIN")
+
+                        .requestMatchers(HttpMethod.POST, "/api/products/add")
+                        .hasAuthority("PRODUCT_CREATE")
+                        .requestMatchers(HttpMethod.GET, "/api/products/list")
+                        .hasAuthority("PRODUCT_READ")
+
                         .anyRequest().authenticated()
                 )
-                .sessionManagement(session->
+                .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
-
 
     @Bean
     public PasswordEncoder passwordEncoder() {
