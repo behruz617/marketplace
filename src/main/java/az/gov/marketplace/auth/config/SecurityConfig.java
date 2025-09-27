@@ -1,4 +1,4 @@
-package az.gov.marketplace.auth.common;
+package az.gov.marketplace.auth.config;
 
 import az.gov.marketplace.auth.securiy.JwtAuthFilter;
 import lombok.RequiredArgsConstructor;
