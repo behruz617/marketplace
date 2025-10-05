@@ -1,4 +1,4 @@
-package az.gov.marketplace.auth.domain;
+package az.gov.marketplace.auth.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

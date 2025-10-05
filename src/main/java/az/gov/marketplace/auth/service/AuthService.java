@@ -1,6 +1,11 @@
 package az.gov.marketplace.auth.service;
 
-import az.gov.marketplace.auth.dto.*;
+import az.gov.marketplace.auth.dto.request.LoginRequest;
+import az.gov.marketplace.auth.dto.request.LogoutRequest;
+import az.gov.marketplace.auth.dto.request.RefreshRequest;
+import az.gov.marketplace.auth.dto.request.RegisterRequest;
+import az.gov.marketplace.auth.dto.response.LoginResponse;
+import az.gov.marketplace.auth.dto.response.UserResponse;
 
 public interface AuthService {
 

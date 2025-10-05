@@ -1,17 +1,19 @@
 package az.gov.marketplace.auth.controller;
 
-import az.gov.marketplace.auth.domain.Product;
-import az.gov.marketplace.auth.domain.Role;
-import az.gov.marketplace.auth.domain.User;
-import az.gov.marketplace.auth.dto.ProductResponse;
+import az.gov.marketplace.auth.domain.entity.Product;
+import az.gov.marketplace.auth.domain.enums.Role;
+import az.gov.marketplace.auth.domain.entity.User;
+import az.gov.marketplace.auth.dto.response.ProductResponse;
 import az.gov.marketplace.auth.repo.ProductRepository;
 import az.gov.marketplace.auth.repo.UserRepository;
+import az.gov.marketplace.auth.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -26,33 +28,11 @@ import java.util.List;
 public class ProductController {
     private final ProductRepository productRepo;
     private final UserRepository userRepo;
-
-    @GetMapping("/list")
-    @PreAuthorize("hasAuthority('PRODUCT_READ')")
-    @Operation(summary = "List all products",
-            description = "Returns a list of all available products in the marketplace")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Products retrieved successfully"),
-            @ApiResponse(responseCode = "403", description = "Forbidden-missing permission")
-    })
-    public List<ProductResponse> listProducts() {
-
-        return productRepo.findAll()
-                .stream()
-                .map(p -> new ProductResponse(
-                        p.getId(),
-                        p.getName(),
-                        p.getPrice(),
-                        p.getSeller().getEmail()
-                ))
-                .toList();
-    }
-
-
+    private final ProductService productService;
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('PRODUCT_DELETE')")
-    @Operation(summary = "Delete a product", description = "Admin cand delete any product ,seller can only delete their own product")
+    @Operation(summary = "Delete a product", description = "Admin can delete any product ,seller can only delete their own product")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Product deleted successfully"),
             @ApiResponse(responseCode = "403", description = "Forbidden -not allowed to delete this product"),
@@ -76,4 +56,17 @@ public class ProductController {
 
         throw new RuntimeException("You cannot delete this product");
     }
+    @GetMapping("/{id}")
+    @Operation(summary = "Get product with id")
+    public ResponseEntity<ProductResponse>getProductById(@PathVariable Long id){
+        return ResponseEntity.ok(productService.getProductById(id));
+    }
+
+    @GetMapping("getAll")
+    @Operation(summary = "Get all products")
+    public ResponseEntity<List<ProductResponse>>getAllProducts(){
+        return ResponseEntity.ok(productService.getAllProducts());
+    }
+
+
 }

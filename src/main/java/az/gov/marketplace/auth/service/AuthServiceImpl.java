@@ -1,9 +1,14 @@
 package az.gov.marketplace.auth.service;
 
-import az.gov.marketplace.auth.domain.RefreshToken;
-import az.gov.marketplace.auth.domain.Role;
-import az.gov.marketplace.auth.domain.User;
-import az.gov.marketplace.auth.dto.*;
+import az.gov.marketplace.auth.domain.entity.RefreshToken;
+import az.gov.marketplace.auth.domain.enums.Role;
+import az.gov.marketplace.auth.domain.entity.User;
+import az.gov.marketplace.auth.dto.request.LoginRequest;
+import az.gov.marketplace.auth.dto.request.LogoutRequest;
+import az.gov.marketplace.auth.dto.request.RefreshRequest;
+import az.gov.marketplace.auth.dto.request.RegisterRequest;
+import az.gov.marketplace.auth.dto.response.LoginResponse;
+import az.gov.marketplace.auth.dto.response.UserResponse;
 import az.gov.marketplace.auth.mapper.UserMapper;
 import az.gov.marketplace.auth.repo.UserRepository;
 import jakarta.transaction.Transactional;
@@ -38,6 +43,7 @@ public class AuthServiceImpl implements AuthService {
         u.setRole(reg.getRole()!=null ? reg.getRole():Role.USER);
         User saved = userRepository.save(u);
         return userMapper.toResponse(saved);
+
     }
 
     @Override

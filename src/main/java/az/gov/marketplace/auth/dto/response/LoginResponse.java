@@ -1,4 +1,4 @@
-package az.gov.marketplace.auth.dto;
+package az.gov.marketplace.auth.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

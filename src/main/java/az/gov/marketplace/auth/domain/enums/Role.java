@@ -1,4 +1,4 @@
-package az.gov.marketplace.auth.domain;
+package az.gov.marketplace.auth.domain.enums;
 
 import java.util.Set;
 
@@ -7,7 +7,8 @@ public enum Role {
             Authority.PRODUCT_READ,
             Authority.ORDER_CREATE,
             Authority.PROFILE_READ,
-            Authority.PROFILE_UPDATE
+            Authority.PROFILE_UPDATE,
+            Authority.ORDER_DELETE
     )),
     SELLER(Set.of(
             Authority.PRODUCT_READ,

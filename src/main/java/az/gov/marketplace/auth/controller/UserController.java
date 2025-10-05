@@ -1,7 +1,7 @@
 package az.gov.marketplace.auth.controller;
 
-import az.gov.marketplace.auth.domain.User;
-import az.gov.marketplace.auth.dto.UserResponse;
+import az.gov.marketplace.auth.domain.entity.User;
+import az.gov.marketplace.auth.dto.response.UserResponse;
 import az.gov.marketplace.auth.repo.UserRepository;
 import az.gov.marketplace.auth.service.JwtService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -46,11 +46,10 @@ public class UserController {
     public ResponseEntity<UserResponse> me(@RequestHeader("Authorization") String authHeader) {
         String token = authHeader.substring(7);
         String email = jwtService.extractEmail(token);
-
         User user = userRepo.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
         return ResponseEntity.ok(
-                UserResponse.builder()
+                UserResponse.   builder()
                         .id(user.getId())
                         .email(user.getEmail())
                         .createdAt(user.getCreatedAt())

@@ -1,6 +1,6 @@
 package az.gov.marketplace.auth.repo;
 
-import az.gov.marketplace.auth.domain.RefreshToken;
+import az.gov.marketplace.auth.domain.entity.RefreshToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
