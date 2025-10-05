@@ -1,29 +1,33 @@
 logging:
   level:
-    root: ERROR              # yalnız WARN və yuxarı loglar çıxsın
-    az.gov.marketplace: INFO  # sənin kodun isə INFO-dan yuxarı çıxsın
+    root: ERROR
+    az.gov.marketplace: INFO
 spring:
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
 
-
-  security:
-    jwt:
-      secret: G8TlwANba6QV6bG9umVjG5LjFgdCxdM6rIIFaa+hvFQ=
-      # açıq şəkildə saxlanır
-      access-expiration: 3600000
-      refresh-expiration: 604800000
   datasource:
-    url: jdbc:postgresql://localhost:5432/marketdb
-    username: market
-    password: market
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+
     jpa:
       hibernate:
-        ddl-auto: validate   # sxemi Flyway idarə edəcək
+        ddl-auto: validate
       properties:
         hibernate.format_sql: true
         hibernate.jdbc.time_zone: UTC
   flyway:
     enabled: true
     locations: classpath:db/migration
+
+
+  security:
+    jwt:
+      secret: ${JWT_SECRET}
+      access-expiration: 3600000
+      refresh-expiration: 604800000
+
 
 server:
   port: 8080
