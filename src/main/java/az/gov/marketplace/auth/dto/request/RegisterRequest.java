@@ -1,15 +1,13 @@
-package az.gov.marketplace.auth.dto;
+package az.gov.marketplace.auth.dto.request;
 
-import az.gov.marketplace.auth.domain.Role;
+import az.gov.marketplace.auth.domain.enums.Role;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class RegisterRequest {
 
     private String email;

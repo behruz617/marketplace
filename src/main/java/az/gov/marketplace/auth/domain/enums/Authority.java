@@ -1,4 +1,4 @@
-package az.gov.marketplace.auth.domain;
+package az.gov.marketplace.auth.domain.enums;
 
 public enum Authority {
 
@@ -9,6 +9,7 @@ public enum Authority {
 
     ORDER_CREATE,
     ORDER_READ,
+    ORDER_DELETE,
 
     PROFILE_READ,
     PROFILE_UPDATE,

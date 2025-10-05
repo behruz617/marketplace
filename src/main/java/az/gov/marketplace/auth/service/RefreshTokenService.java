@@ -1,7 +1,7 @@
 package az.gov.marketplace.auth.service;
 
-import az.gov.marketplace.auth.domain.RefreshToken;
-import az.gov.marketplace.auth.domain.User;
+import az.gov.marketplace.auth.domain.entity.RefreshToken;
+import az.gov.marketplace.auth.domain.entity.User;
 import az.gov.marketplace.auth.repo.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

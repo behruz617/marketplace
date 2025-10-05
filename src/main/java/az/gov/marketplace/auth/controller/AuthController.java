@@ -1,6 +1,11 @@
 package az.gov.marketplace.auth.controller;
 
-import az.gov.marketplace.auth.dto.*;
+import az.gov.marketplace.auth.dto.request.LoginRequest;
+import az.gov.marketplace.auth.dto.request.LogoutRequest;
+import az.gov.marketplace.auth.dto.request.RefreshRequest;
+import az.gov.marketplace.auth.dto.request.RegisterRequest;
+import az.gov.marketplace.auth.dto.response.LoginResponse;
+import az.gov.marketplace.auth.dto.response.UserResponse;
 import az.gov.marketplace.auth.service.AuthService;
 import az.gov.marketplace.auth.service.JwtService;
 import io.swagger.v3.oas.annotations.Operation;

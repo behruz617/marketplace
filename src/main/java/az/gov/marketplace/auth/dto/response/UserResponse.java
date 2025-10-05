@@ -1,4 +1,4 @@
-package az.gov.marketplace.auth.dto;
+package az.gov.marketplace.auth.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,5 +13,6 @@ import java.time.Instant;
 public class UserResponse {
     private Long id;
     private String email;
+    private String role;
     private Instant createdAt;
 }
