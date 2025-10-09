@@ -33,6 +33,7 @@ jobs:
       - name: Push Docker image to Docker Hub
         run: docker push behruz617/marketplace-app:latest
 
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
