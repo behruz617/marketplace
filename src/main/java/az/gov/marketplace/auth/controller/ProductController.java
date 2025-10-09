@@ -1,11 +1,13 @@
 package az.gov.marketplace.auth.controller;
 
 import az.gov.marketplace.auth.domain.entity.Product;
-import az.gov.marketplace.auth.domain.enums.Role;
 import az.gov.marketplace.auth.domain.entity.User;
+import az.gov.marketplace.auth.domain.enums.Role;
 import az.gov.marketplace.auth.dto.response.ProductResponse;
+import az.gov.marketplace.auth.mapper.ProductImageMapper;
 import az.gov.marketplace.auth.repo.ProductRepository;
 import az.gov.marketplace.auth.repo.UserRepository;
+import az.gov.marketplace.auth.service.ProductImageService;
 import az.gov.marketplace.auth.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -29,6 +31,8 @@ public class ProductController {
     private final ProductRepository productRepo;
     private final UserRepository userRepo;
     private final ProductService productService;
+    private final ProductImageService productImageService;
+    private final ProductImageMapper productImageMapper;
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('PRODUCT_DELETE')")
@@ -56,17 +60,19 @@ public class ProductController {
 
         throw new RuntimeException("You cannot delete this product");
     }
+
     @GetMapping("/{id}")
     @Operation(summary = "Get product with id")
-    public ResponseEntity<ProductResponse>getProductById(@PathVariable Long id){
+    public ResponseEntity<ProductResponse> getProductById(@PathVariable Long id) {
         return ResponseEntity.ok(productService.getProductById(id));
     }
 
     @GetMapping("getAll")
     @Operation(summary = "Get all products")
-    public ResponseEntity<List<ProductResponse>>getAllProducts(){
+    public ResponseEntity<List<ProductResponse>> getAllProducts() {
         return ResponseEntity.ok(productService.getAllProducts());
     }
+
 
 
 }

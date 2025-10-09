@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -44,4 +45,8 @@ public class Product {
 
     @Column(name = "is_active")
     private Boolean isActive = true;
+
+    @Builder.Default
+    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<ProductImage>images=new ArrayList<>();
 }

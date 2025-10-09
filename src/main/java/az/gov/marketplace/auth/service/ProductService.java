@@ -23,7 +23,7 @@ public class ProductService {
     private final ProductMapper productMapper;
 
     @Transactional
-    public ProductResponse addProductWithSpecs(ProductRequest req) {
+    public ProductResponse addProductWithSpecs(ProductRequest req)  {
         User seller = userRepo.findById(req.getSellerId())
                 .orElseThrow(() -> new RuntimeException("Sellet not found "));
         Category category = categoryRepo.findById(req.getCategoryId())
@@ -83,10 +83,11 @@ public class ProductService {
                 .map(productMapper::toResponse)
                 .toList();
     }
+
     @Transactional
-    public void deleteProduct(Long productId){
-    Product product=productRepo.findById(productId)
-            .orElseThrow(()->new RuntimeException("Product not found with id "+productId));
+    public void deleteProduct(Long productId) {
+        Product product = productRepo.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found with id " + productId));
 
     }
 
