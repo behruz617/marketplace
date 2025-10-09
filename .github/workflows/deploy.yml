@@ -3,7 +3,7 @@ name: Deploy Marketplace App to AWS ECS
 on:
   push:
     branches:
-      - main   # əgər səndə 'master'dirsə, buranı master elə
+      - dev   # və ya 'main', hansı branch-dan deploy istəyirsənsə
 
 jobs:
   deploy:
@@ -17,6 +17,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: '21'
+          distribution: ''
 
       - name: Build JAR file
         run: ./gradlew clean build
@@ -30,9 +31,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Push Docker image to Docker Hub
+      - name: Push image to Docker Hub
         run: docker push behruz617/marketplace-app:latest
-
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -42,7 +42,9 @@ jobs:
           aws-region: eu-north-1
 
       - name: Force new ECS deployment
-        uses: aws-actions/amazon-ecs-update-service@v2
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v2
         with:
-          cluster: marketplace-cluster-v2
+          task-definition: marketplace-app:2   # Sənin task definition adın və versiyası
           service: marketplace-service
+          cluster: marketplace-cluster-v2
+          wait-for-service-stability: true
