@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://marketplace-db.ch8akm2wacsd.eu-north-1.rds.amazonaws.com:5432/postgres
+    username: postgres
+    password: behruz50687#
+    driver-class-name: org.postgresql.Driver
+
+cloud:
+  aws:
+    s3:
+      bucket-name: marketplace-product-images1
+    region:
+      static: eu-north-1
+aws:
+  credentials:
+    access-key: ${AWS_ACCESS_KEY}
+    secret-key: ${AWS_SECRET_KEY}
+
+  server:
+    port:8080
+

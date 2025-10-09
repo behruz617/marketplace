@@ -1,6 +1,8 @@
 package az.gov.marketplace.auth.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,9 +27,11 @@ public class Category {
 
     @ManyToOne
     @JoinColumn(name = "parent_id")
+    @JsonBackReference
     private Category parent;
 
     @OneToMany(mappedBy = "parent")
+    @JsonManagedReference
     private List<Category>children;
 
     @OneToMany(mappedBy = "category")

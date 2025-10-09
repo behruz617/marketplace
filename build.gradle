@@ -32,12 +32,21 @@ dependencies {
     // Swagger / OpenAPI (Swagger UI at /swagger)
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
 
+    //picture deploy for aws s3
+    implementation 'software.amazon.awssdk:s3:2.25.28'
+
+
+
     //Rabbit mq
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
 
     // (Optional) DTO mapper — sonra istifadə edəcəyik
     implementation("org.mapstruct:mapstruct:1.5.5.Final")
     annotationProcessor("org.mapstruct:mapstruct-processor:1.5.5.Final")
+
+    //redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
 
     // Lombok (əgər istifadə edəcəksənsə)
     compileOnly("org.projectlombok:lombok:1.18.32")

@@ -20,5 +20,6 @@ public class ProductResponse {
     private CategoryResponse category;
     private UserResponse seller;
     private List<SpecificationResponse> specifications;
+    private List<ProductImageResponse>images;
 
 }
