@@ -41,10 +41,12 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-north-1
 
-      - name: Force new ECS deployment
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v2
-        with:
-          task-definition: marketplace-app:2   # Sənin task definition adın və versiyası
-          service: marketplace-service
-          cluster: marketplace-cluster-v2
-          wait-for-service-stability: true
+      - name: Force new deployment on ECS (CLI)
+        run: |
+          aws ecs update-service \
+            --cluster marketplace-cluster-v2 \
+            --service marketplace-service \
+            --force-new-deployment \
+            --region eu-north-1
+     
+
