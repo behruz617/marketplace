@@ -12,6 +12,7 @@ repositories {
     mavenCentral()
 }
 
+
 dependencies {
     // Spring
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -59,6 +60,8 @@ dependencies {
     testImplementation("org.testcontainers:junit-jupiter:1.20.2")
     testImplementation("org.testcontainers:postgresql:1.20.2")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testImplementation("org.mockito:mockito-core:5.12.0")
+    testImplementation("org.mockito:mockito-junit-jupiter:5.12.0")
 }
 
 tasks.test {
