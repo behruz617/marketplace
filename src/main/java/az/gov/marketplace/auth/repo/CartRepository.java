@@ -1,14 +1,12 @@
 package az.gov.marketplace.auth.repo;
 
+import az.gov.marketplace.auth.domain.entity.Cart;
 import az.gov.marketplace.auth.domain.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface UserRepository extends JpaRepository<User,Long> {
+public interface CartRepository extends JpaRepository<Cart,Long> {
 
-    boolean existsByEmail(String email);
-
-    Optional<User> findByEmail(String email);
-
+    Optional<Cart>findByUser(User user);
 }

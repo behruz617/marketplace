@@ -1,6 +1,13 @@
 version: '3.9'
 
 services:
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
   db:
     image: postgres:16
     container_name: market-db-local
@@ -17,6 +24,7 @@ services:
 
 volumes:
   pgdata_local:
+  redis_data:
 
 networks:
   marketplace-net:
