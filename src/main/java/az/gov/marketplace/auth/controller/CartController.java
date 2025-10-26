@@ -30,8 +30,6 @@ public class CartController {
 
     @GetMapping("/view")
     public ResponseEntity<CartResponse> viewCart(Principal principal) {
-        Cart cart = cartService.getCartByUserName(principal.getName());
-        CartResponse response = cartMapper.toCartResponse(cart);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(cartService.getCartByUserName(principal.getName()));
     }
 }
