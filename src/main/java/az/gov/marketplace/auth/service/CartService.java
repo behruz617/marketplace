@@ -4,6 +4,8 @@ import az.gov.marketplace.auth.domain.entity.Cart;
 import az.gov.marketplace.auth.domain.entity.CartItem;
 import az.gov.marketplace.auth.domain.entity.Product;
 import az.gov.marketplace.auth.domain.entity.User;
+import az.gov.marketplace.auth.dto.response.CartResponse;
+import az.gov.marketplace.auth.mapper.CartMapper;
 import az.gov.marketplace.auth.repo.CartRepository;
 import az.gov.marketplace.auth.repo.ProductRepository;
 import az.gov.marketplace.auth.repo.UserRepository;
@@ -21,6 +23,8 @@ public class CartService {
     private final CartRepository cartRepo;
     private final UserRepository userRepo;
     private final ProductRepository productRepo;
+    private final CartCacheService cartCacheService;
+    private final CartMapper cartMapper;
 
     public Cart addItemCart(String username, Long productId, int quantity) {
         User user = userRepo.findByEmail(username)
@@ -62,13 +66,22 @@ public class CartService {
         return cartRepo.save(cart);
     }
 
-    public Cart getCartByUserName(String username){
+    public CartResponse getCartByUserName(String username){
+
+        var cached=cartCacheService.getCartByUserEmail(username);
+        if (cached!=null){
+            System.out.println("Melumat redisden oxundu: "+username);
+
+            return cached;
+        }
         User user=userRepo.findByEmail(username)
                 .orElseThrow(()->new RuntimeException("User not found with email: "+username));
 
         Cart cart=cartRepo.findByUser(user)
                 .orElseThrow(()->new RuntimeException("Cart not found for user :" +user.getEmail()));
 
-        return cart;
+        CartResponse response=cartMapper.toCartResponse(cart);
+        cartCacheService.saveCartToCache(username,response);
+        return response;
     }
 }

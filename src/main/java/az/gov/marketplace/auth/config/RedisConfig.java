@@ -50,12 +50,14 @@ public class RedisConfig {
     @Bean
     public CacheManager cacheManager(RedisConnectionFactory connectionFactory){
         GenericJackson2JsonRedisSerializer serializer=new GenericJackson2JsonRedisSerializer();
+
         RedisSerializationContext.SerializationPair<Object>serializationPair=
                 RedisSerializationContext.SerializationPair.fromSerializer(serializer);
 
         RedisCacheConfiguration defaultConfig=RedisCacheConfiguration.defaultCacheConfig()
                 .serializeValuesWith(serializationPair)
                 .entryTtl(Duration.ofMinutes(10));
+
         Map<String,RedisCacheConfiguration>cacheConfigs=new HashMap<>();
         cacheConfigs.put("cart",defaultConfig.entryTtl(Duration.ofMinutes(15)));
 
