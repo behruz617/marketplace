@@ -7,6 +7,9 @@ services:
     restart: always
     volumes:
       - redis_data:/data
+    networks:
+      -marketplace-net:
+
   db:
     image: postgres:16
     container_name: market-db-prod
